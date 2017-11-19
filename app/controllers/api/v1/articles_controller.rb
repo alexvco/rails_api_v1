@@ -6,11 +6,13 @@ module Api
         articles = Article.all
         render json: {status: "SUCCESS", message: "My message", data: articles}, status: 200
       end
+      # curl http://localhost:3000/api/v1/articles | python -m json.tool
 
       def show
         article = Article.find(params[:id])
         render json: {status: "SUCCESS", message: "Loaded Article", data: article}, status: :ok
       end
+      # curl http://localhost:3000/api/v1/articles/2 | python -m json.tool
 
       def create
         article = Article.new(article_params)
@@ -21,6 +23,7 @@ module Api
           render json: {status: 'ERROR', message: "Article not saved", data: article.errors}, status: :unprocessable_entity
         end
       end
+      # curl -X POST http://localhost:3000/api/v1/articles -H "Content-Type:application/json" -d '{"title":"mycreatedtitle", "body":"mycreatedbody"}'
 
       def update
         article = Article.find(params[:id])
@@ -30,12 +33,14 @@ module Api
           render json: {status: 'ERROR', message: "Article not updated", data: article.errors}, status: :unprocessable_entity
         end
       end
+      # curl -X PUT http://localhost:3000/api/v1/articles/4 -H "Content-Type:application/json" -d '{"title":"mytitle", "body":"mybody"}'
 
       def destroy
         article = Article.find(params[:id])
         article.destroy
         render json: {status: "SUCCESS", message: "Deleted Article", data: article}, status: 200
       end
+      # curl -X DELETE http://localhost:3000/api/v1/articles/5
 
       private
 
